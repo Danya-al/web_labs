@@ -1,0 +1,274 @@
+:root {
+  color-scheme: light;
+  --background: #f7f5fc;
+  --surface: #ffffff;
+  --ink: #282039;
+  --muted: #665e76;
+  --border: #e5dfed;
+  --accent: #5c3691;
+  --accent-dark: #472771;
+  --accent-soft: #eee5fb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--ink);
+  font: 16px/1.5 "Segoe UI", system-ui, sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+a {
+  color: var(--accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.container {
+  width: min(100% - 32px, 720px);
+  margin-inline: auto;
+}
+
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-content,
+.brand,
+nav {
+  display: flex;
+  align-items: center;
+}
+
+.header-content {
+  justify-content: space-between;
+  gap: 10px 20px;
+  flex-wrap: wrap;
+  padding-block: 12px;
+}
+
+.brand {
+  gap: 10px;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.brand img {
+  border-radius: 9px;
+}
+
+nav {
+  gap: 4px;
+}
+
+nav a {
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 0.925rem;
+  text-decoration: none;
+}
+
+nav a[aria-current="page"],
+nav a:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+main {
+  padding-block: clamp(30px, 6vw, 60px);
+}
+
+h1 {
+  margin: 0 0 24px;
+  font-size: clamp(2rem, 6vw, 3rem);
+  line-height: 1.12;
+  letter-spacing: -0.045em;
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.card {
+  padding: clamp(16px, 4vw, 24px);
+  margin-bottom: 14px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: 0 4px 14px rgba(48, 28, 74, 0.04);
+}
+
+form {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+input[type="text"] {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 14px;
+  border: 1px solid #d8cfe5;
+  border-radius: 10px;
+  background: #fcfbfe;
+  color: var(--ink);
+}
+
+input::placeholder {
+  color: var(--muted);
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.add-button {
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: white;
+  font-weight: 600;
+}
+
+.add-button:hover:enabled {
+  background: var(--accent-dark);
+}
+
+.list-header,
+.filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.list-header {
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.filters {
+  gap: 6px;
+}
+
+.filters button {
+  padding: 5px 11px;
+  border-radius: 8px;
+  background: var(--background);
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.filters button[aria-pressed="true"],
+.filters button:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.filters button[aria-pressed="true"] {
+  font-weight: 600;
+}
+
+.list-summary {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.task-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.task-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  flex-wrap: wrap;
+  padding-block: 12px;
+  border-top: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}
+
+.task-list li:first-child {
+  margin-top: 12px;
+}
+
+.task-list li:last-child {
+  padding-bottom: 0;
+}
+
+.task-title {
+  flex: 1;
+  min-width: min(100%, 12rem);
+}
+
+.task-status {
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--background);
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.task-status.completed {
+  background: #e9f5ed;
+  color: #285a3b;
+}
+
+.notice,
+.error {
+  padding: 9px 12px;
+  border-radius: 9px;
+  font-size: 0.925rem;
+}
+
+.notice {
+  margin: 0 0 14px;
+  background: #fff2d8;
+  color: #693e10;
+}
+
+.error {
+  margin: 10px 0 0;
+  background: #fbeaf0;
+  color: #8b2346;
+}
+
+.about-card p {
+  margin: 10px 0 0;
+  max-width: 58ch;
+}
+
+@media (max-width: 430px) {
+  form {
+    flex-direction: column;
+  }
+}

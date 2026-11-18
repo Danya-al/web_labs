@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5fc">
+  <title>Мои задачи</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <script src="/app.js" type="module"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-content">
+      <a class="brand" href="/">
+        <img src="/icons/icon-192.png" width="34" height="34" alt="">
+        Мои задачи
+      </a>
+      <nav aria-label="Основная навигация">
+        <a href="/" aria-current="page">Задачи</a>
+        <a href="/about">О себе</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Список задач</h1>
+    <p id="offline" class="notice" role="status" hidden></p>
+
+    <section class="card" aria-labelledby="new-task-heading">
+      <h2 id="new-task-heading"><label for="title">Новая задача</label></h2>
+      <form id="task-form">
+        <input id="title" name="title" type="text" placeholder="Что нужно сделать?"
+               autocomplete="off" required>
+        <button class="add-button" type="submit">Добавить</button>
+      </form>
+      <p id="form-error" class="error" role="alert" hidden></p>
+    </section>
+
+    <section class="card" aria-labelledby="tasks-heading">
+      <div class="list-header">
+        <h2 id="tasks-heading">Задачи</h2>
+        <div class="filters" role="group" aria-label="Фильтр задач">
+          <button type="button" data-filter="all" aria-pressed="true">Все</button>
+          <button type="button" data-filter="completed" aria-pressed="false">Завершённые</button>
+        </div>
+      </div>
+      <p id="list-summary" class="list-summary" role="status">Загружаем задачи…</p>
+      <ul id="task-list" class="task-list"></ul>
+    </section>
+  </main>
+</body>
+</html>
