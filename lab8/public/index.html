@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5efe1">
+  <title>Адресная книга</title>
+  <link rel="icon" type="image/png" href="/icons/icon-192.png">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" type="module"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <img src="/icons/icon-192.png" width="56" height="56" alt="">
+      <h1>Адресная книга</h1>
+    </div>
+    <button id="theme" class="button secondary" type="button" aria-pressed="false">
+      <span class="theme-icon" aria-hidden="true">☾</span> Тёмная тема
+    </button>
+  </header>
+
+  <main>
+    <section aria-labelledby="contacts-heading">
+      <div class="section-header">
+        <h2 id="contacts-heading" tabindex="-1">Контакты</h2>
+        <button id="add-contact" class="button primary" type="button">
+          <span aria-hidden="true">+</span> Добавить контакт
+        </button>
+      </div>
+
+      <div class="filters">
+        <div class="search-row">
+          <div>
+            <label for="search">Поиск</label>
+            <div class="search-field">
+              <span class="search-icon" aria-hidden="true"></span>
+              <input id="search" type="search" maxlength="254" autocomplete="off"
+                     placeholder="Имя, телефон или email">
+            </div>
+          </div>
+          <div>
+            <label for="limit">На странице</label>
+            <select id="limit">
+              <option>5</option>
+              <option selected>10</option>
+              <option>20</option>
+              <option>50</option>
+            </select>
+          </div>
+        </div>
+
+        <nav id="alphabet" aria-labelledby="alphabet-heading">
+          <h3 id="alphabet-heading">Алфавитный указатель</h3>
+          <div class="alphabet-tools">
+            <button class="button letter" type="button" data-letter="" aria-pressed="true">Все</button>
+            <button class="button letter" type="button" data-letter="#" aria-label="Прочие символы" aria-pressed="false">#</button>
+          </div>
+          <div id="cyrillic" class="alphabet-row" role="group" aria-label="Кириллица"></div>
+          <div id="latin" class="alphabet-row" role="group" aria-label="Латиница"></div>
+        </nav>
+      </div>
+
+      <p id="activity" class="activity" role="status" hidden></p>
+      <p id="summary" class="summary" role="status">Загружаем контакты…</p>
+      <div id="list-error" class="notice" hidden>
+        <p id="list-error-message" class="error" role="alert"></p>
+        <button id="retry" class="button secondary" type="button">Повторить</button>
+      </div>
+
+      <div id="contact-list" aria-busy="true"></div>
+      <div id="empty" class="notice" hidden>
+        <h3 id="empty-title"></h3>
+        <button id="clear-filters" class="button secondary" type="button" hidden>Сбросить фильтры</button>
+        <p id="empty-hint" hidden>Добавьте первый контакт, чтобы начать.</p>
+      </div>
+      <nav id="pagination" class="pagination" aria-label="Страницы контактов" hidden>
+        <button id="previous" class="button secondary" type="button">Назад</button>
+        <span id="page-number"></span>
+        <button id="next" class="button secondary" type="button">Вперёд</button>
+      </nav>
+    </section>
+  </main>
+
+  <footer>Лабораторная работа №8 · Даниил Левченко, 932402</footer>
+
+  <dialog id="editor" aria-labelledby="editor-heading">
+    <form id="contact-form" novalidate>
+      <h2 id="editor-heading">Новый контакт</h2>
+      <fieldset id="contact-fields">
+        <label for="full-name">Полное имя</label>
+        <input id="full-name" name="full_name" autocomplete="name" maxlength="120" required autofocus>
+
+        <label for="phone">Телефон</label>
+        <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="32" required
+               placeholder="+7 (900) 123-45-67" aria-describedby="phone-hint">
+        <small id="phone-hint">От 7 до 15 цифр</small>
+
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" maxlength="254" required
+               placeholder="name@example.com">
+
+        <label for="notes">Заметки <span class="optional">(необязательно)</span></label>
+        <textarea id="notes" name="notes" maxlength="2000" rows="3"></textarea>
+
+        <p id="editor-error" class="error" role="alert" hidden></p>
+        <div class="dialog-actions">
+          <button id="cancel-edit" class="button secondary" type="button">Отмена</button>
+          <button id="save" class="button primary" type="submit">Сохранить</button>
+        </div>
+      </fieldset>
+    </form>
+  </dialog>
+
+  <dialog id="delete-dialog" aria-labelledby="delete-heading" aria-describedby="delete-message">
+    <form id="delete-form">
+      <h2 id="delete-heading">Удалить контакт?</h2>
+      <p id="delete-message"></p>
+      <p id="delete-error" class="error" role="alert" hidden></p>
+      <div class="dialog-actions">
+        <button id="cancel-delete" class="button secondary" type="button" autofocus>Отмена</button>
+        <button id="confirm-delete" class="button primary" type="submit">Удалить</button>
+      </div>
+    </form>
+  </dialog>
+
+  <template id="contact-template">
+    <article class="contact-card">
+      <h4></h4>
+      <dl>
+        <div><dt>Телефон</dt><dd><a class="contact-phone"></a></dd></div>
+        <div><dt>Email</dt><dd><a class="contact-email"></a></dd></div>
+      </dl>
+      <details class="contact-notes">
+        <summary>Заметки</summary>
+        <p></p>
+      </details>
+      <div class="card-actions">
+        <button class="button secondary" type="button" data-action="edit">Изменить</button>
+        <button class="button plain" type="button" data-action="delete">Удалить</button>
+      </div>
+    </article>
+  </template>
+</body>
+</html>
