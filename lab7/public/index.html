@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f2fc">
+  <title>Контакты · Адресная книга</title>
+  <link rel="icon" type="image/png" href="/icon.png">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" type="module"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container brand">
+      <img src="/icon.png" width="36" height="36" alt="">
+      <span>Адресная книга</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Контакты</h1>
+
+    <section class="card" aria-labelledby="form-heading">
+      <h2 id="form-heading">Новый контакт</h2>
+      <form id="contact-form">
+        <fieldset id="contact-fields" aria-labelledby="form-heading">
+          <label for="name">Имя
+            <input id="name" name="name" placeholder="Алекс Смирнов" autocomplete="name" required>
+          </label>
+          <label for="phone">Телефон
+            <input id="phone" name="phone" type="tel" placeholder="+7 900 123-45-67" autocomplete="tel" required>
+          </label>
+          <label for="email">Email
+            <input id="email" name="email" inputmode="email" placeholder="alex@example.com" autocomplete="email" required>
+          </label>
+          <div class="form-actions">
+            <button id="save" class="primary" type="submit">Добавить</button>
+            <button id="cancel-edit" class="secondary" type="button" hidden>Отмена</button>
+          </div>
+        </fieldset>
+      </form>
+      <p id="form-error" class="error" role="alert" hidden></p>
+    </section>
+
+    <section class="card" aria-labelledby="list-heading">
+      <div class="list-header">
+        <h2 id="list-heading">Список контактов</h2>
+        <div class="list-controls">
+          <div class="search-field">
+            <span class="search-icon" aria-hidden="true"></span>
+            <input id="search" type="search" aria-label="Поиск по имени, телефону или email"
+                   placeholder="Имя, телефон или email" autocomplete="off">
+          </div>
+          <label class="page-size" for="limit">На странице
+            <select id="limit">
+              <option>5</option>
+              <option selected>10</option>
+              <option>20</option>
+              <option>50</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <p id="activity" class="success" role="status" hidden></p>
+      <p id="summary" class="summary" role="status">Загружаем контакты…</p>
+      <div id="list-error" class="list-error" hidden>
+        <p id="list-error-message" class="error" role="alert"></p>
+        <button id="retry" class="secondary" type="button">Повторить</button>
+      </div>
+      <ul id="contact-list" class="contact-list" aria-label="Контакты"></ul>
+      <div id="empty" class="empty" hidden>
+        <span class="empty-icon" aria-hidden="true"></span>
+        <p id="empty-title"></p>
+        <p id="empty-hint"></p>
+      </div>
+      <nav id="pagination" class="pagination" aria-label="Страницы контактов" hidden>
+        <button id="previous" class="secondary" type="button">Назад</button>
+        <span id="page-number"></span>
+        <button id="next" class="secondary" type="button">Вперёд</button>
+      </nav>
+    </section>
+  </main>
+
+  <dialog id="delete-dialog" aria-labelledby="delete-heading" aria-describedby="delete-message">
+    <form id="delete-form">
+      <h2 id="delete-heading">Удалить контакт?</h2>
+      <p id="delete-message"></p>
+      <p id="delete-error" class="error" role="alert" hidden></p>
+      <div class="dialog-actions">
+        <button id="cancel-delete" class="secondary" type="button" autofocus>Отмена</button>
+        <button id="confirm-delete" class="danger" type="submit">Удалить</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>
